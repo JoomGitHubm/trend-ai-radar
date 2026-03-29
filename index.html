@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trend & AI Radar</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#131a2e;
+      --card2:#1b2440;
+      --text:#eef2ff;
+      --muted:#aab4d6;
+      --purple:#7c3aed;
+      --cyan:#06b6d4;
+      --pink:#ec4899;
+      --green:#22c55e;
+      --yellow:#f59e0b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124,58,237,.25), transparent 30%),
+        radial-gradient(circle at top right, rgba(6,182,212,.20), transparent 25%),
+        linear-gradient(135deg, #090d18, #10182f);
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+      padding:20px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, rgba(124,58,237,.22), rgba(6,182,212,.16));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+    }
+
+    .badge{
+      display:inline-block;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      color:#dbeafe;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0 0 10px 0;
+      font-size:44px;
+      line-height:1.05;
+    }
+
+    .grad{
+      background:linear-gradient(90deg, #a78bfa, #22d3ee, #f472b6);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.6;
+      max-width:760px;
+    }
+
+    .topbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    button{
+      border:none;
+      border-radius:14px;
+      padding:12px 16px;
+      cursor:pointer;
+      color:white;
+      font-weight:bold;
+      font-size:14px;
+    }
+
+    .primary{
+      background:linear-gradient(90deg, var(--purple), var(--cyan));
+    }
+
+    .secondary{
+      background:#202a48;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .stat small{
+      display:block;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .stat strong{
+      font-size:24px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .panel{
+      background:rgba(19,26,46,.95);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:0 18px 50px rgba(0,0,0,.25);
+    }
+
+    .panel h2{
+      margin-top:0;
+      margin-bottom:16px;
+      font-size:22px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px;
+      margin-bottom:12px;
+    }
+
+    .card-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .score{
+      min-width:68px;
+      text-align:center;
+      padding:10px 8px;
+      border-radius:14px;
+      background:linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.28));
+      font-weight:bold;
+    }
+
+    .card h3{
+      margin:0 0 8px 0;
+      font-size:18px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .tags{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .tag{
+      background:#202a48;
+      color:#dbeafe;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+    }
+
+    .weekly{
+      margin-top:20px;
+      background:rgba(19,26,46,.95);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      padding:20px;
+    }
+
+    .bars{
+      display:flex;
+      align-items:flex-end;
+      gap:12px;
+      height:220px;
+      margin-top:18px;
+    }
+
+    .bar-wrap{
+      flex:1;
+      text-align:center;
+    }
+
+    .bar{
+      width:100%;
+      border-radius:14px 14px 6px 6px;
+      background:linear-gradient(180deg, #22d3ee, #7c3aed);
+      box-shadow:0 12px 30px rgba(124,58,237,.25);
+    }
+
+    .bar-label{
+      color:var(--muted);
+      margin-top:8px;
+      font-size:13px;
+    }
+
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      padding:18px 0 6px;
+    }
+
+    @media (max-width:900px){
+      .stats{grid-template-columns:1fr 1fr}
+      .grid{grid-template-columns:1fr}
+      h1{font-size:34px}
+    }
+
+    @media (max-width:560px){
+      .stats{grid-template-columns:1fr}
+      .bars{height:160px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="badge">⚡ Demo sürüm • Trend + AI takip paneli</div>
+      <h1><span class="grad">Trend & AI Radar</span></h1>
+      <p class="subtitle">
+        Günlük trend konularını ve yeni çıkan yapay zekâ araçlarını tek ekranda gösteren mini bir keşif sitesi.
+        Şu an örnek verilerle çalışıyor. Sonra istersek gerçek veriyle de bağlarız.
+      </p>
+
+      <div class="topbar">
+        <button class="primary" onclick="yenile()">Yeni örnek veri yükle</button>
+        <button class="secondary" onclick="alert('Bir sonraki aşamada bunu GitHub Pages ile internete koyacağız 🚀')">Canlıya alma hazırlığı</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <small>Saat</small>
+          <strong id="clock">00:00:00</strong>
+        </div>
+        <div class="stat">
+          <small>Bugünün trendi</small>
+          <strong id="topTrend">AI Agents</strong>
+        </div>
+        <div class="stat">
+          <small>Bugünün AI aracı</small>
+          <strong id="topAi">CodeBuddy X</strong>
+        </div>
+        <div class="stat">
+          <small>İlham puanı</small>
+          <strong>999+</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>🔥 Günlük Trendler</h2>
+        <div id="trendList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>🤖 Yeni AI Araçları</h2>
+        <div id="aiList"></div>
+      </div>
+    </section>
+
+    <section class="weekly">
+      <h2>📈 Haftalık Hareket</h2>
+      <div class="bars" id="weeklyBars"></div>
+    </section>
+
+    <div class="footer">
+      Bu sürüm tek dosyada çalışır. Yani sadece index.html ile açılabilir 🎉
+    </div>
+  </div>
+
+  <script>
+    const trendSets = [
+      [
+        { title: "AI Agents", desc: "Görev yapan akıllı yardımcı sistemler bugün çok konuşuluyor.", score: 98, tags:["Teknoloji","Yapay Zekâ","Yükselişte"] },
+        { title: "Robot Videolar", desc: "Kısa videolarda robot ve AI temalı içerikler öne çıkıyor.", score: 89, tags:["Video","Sosyal Medya"] },
+        { title: "Prompt Tasarımı", desc: "İyi komut yazma yöntemleri daha çok dikkat çekiyor.", score: 81, tags:["Öğrenme","Üretkenlik"] }
+      ],
+      [
+        { title: "Video AI", desc: "Yazıdan video üreten araçlar bu hafta çok merak ediliyor.", score: 95, tags:["Video","AI"] },
+        { title: "Akıllı Arama", desc: "Cevap veren arama motorları yükselişte.", score: 86, tags:["Arama","Bilgi"] },
+        { title: "No-Code Uygulamalar", desc: "Kod yazmadan uygulama yapma araçları ilgi çekiyor.", score: 78, tags:["No-Code","Girişim"] }
+      ]
+    ];
+
+    const aiSets = [
+      [
+        { title: "CodeBuddy X", desc: "Kod yazarken öneri veren yardımcı.", score: "Hot", tags:["Kod","Developer Tool"] },
+        { title: "VisionCraft", desc: "Görsel üreten ve düzenleyen yaratıcı araç.", score: "New", tags:["Image AI","Tasarım"] },
+        { title: "TalkFlow AI", desc: "Ses kaydı, özet ve toplantı notu çıkarır.", score: "Up", tags:["Ses","Verimlilik"] }
+      ],
+      [
+        { title: "ClipMind", desc: "Videoları kısa özetlere dönüştüren akıllı araç.", score: "New", tags:["Video","Özet"] },
+        { title: "PromptPilot", desc: "Hazır prompt fikirleri sunar.", score: "Hot", tags:["Prompt","Yaratıcılık"] },
+        { title: "DesignGenie", desc: "Hızlı afiş ve sosyal medya görselleri üretir.", score: "Up", tags:["Tasarım","İçerik"] }
+      ]
+    ];
+
+    const weeklySets = [
+      [45, 58, 52, 72, 84, 66, 93],
+      [55, 49, 60, 68, 74, 88, 91]
+    ];
+
+    const gunler = ["Pzt","Sal","Çrş","Prş","Cum","Cmt","Paz"];
+    let activeIndex = 0;
+
+    function renderCards(list, data) {
+      list.innerHTML = "";
+      data.forEach(item => {
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `
+          <div class="card-top">
+            <div>
+              <h3>${item.title}</h3>
+              <p>${item.desc}</p>
+              <div class="tags">
+                ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+              </div>
+            </div>
+            <div class="score">${item.score}</div>
+          </div>
+        `;
+        list.appendChild(el);
+      });
+    }
+
+    function renderBars(values) {
+      const weeklyBars = document.getElementById("weeklyBars");
+      weeklyBars.innerHTML = "";
+      values.forEach((v, i) => {
+        const wrap = document.createElement("div");
+        wrap.className = "bar-wrap";
+        wrap.innerHTML = `
+          <div class="bar" style="height:${v}%;"></div>
+          <div class="bar-label">${gunler[i]}</div>
+        `;
+        weeklyBars.appendChild(wrap);
+      });
+    }
+
+    function renderAll() {
+      renderCards(document.getElementById("trendList"), trendSets[activeIndex]);
+      renderCards(document.getElementById("aiList"), aiSets[activeIndex]);
+      renderBars(weeklySets[activeIndex]);
+
+      document.getElementById("topTrend").textContent = trendSets[activeIndex][0].title;
+      document.getElementById("topAi").textContent = aiSets[activeIndex][0].title;
+    }
+
+    function yenile() {
+      activeIndex = activeIndex === 0 ? 1 : 0;
+      renderAll();
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent = now.toLocaleTimeString("tr-TR");
+    }
+
+    renderAll();
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
