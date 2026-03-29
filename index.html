@@ -394,7 +394,7 @@ async function gercekVeriGetir() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   const data = await res.json();
 
-  const list = data.entries.slice(0, 5);
+  const list = data.slice(0, 5);
 
   const trendList = document.getElementById("trendList");
   trendList.innerHTML = "";
@@ -405,13 +405,13 @@ async function gercekVeriGetir() {
     el.innerHTML = `
       <div class="card-top">
         <div>
-          <h3>${item.API}</h3>
-          <p>${item.Description}</p>
+          <h3>${item.title}</h3>
+          <p>${item.body}</p>
           <div class="tags">
-            <span class="tag">${item.Category}</span>
+            <span class="tag">API Veri</span>
           </div>
         </div>
-        <div class="score">API</div>
+        <div class="score">Live</div>
       </div>
     `;
     trendList.appendChild(el);
