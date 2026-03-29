@@ -389,6 +389,35 @@
       renderAll();
     }
 
+
+async function gercekVeriGetir() {
+  const res = await fetch("https://api.publicapis.org/entries");
+  const data = await res.json();
+
+  const list = data.entries.slice(0, 5);
+
+  const trendList = document.getElementById("trendList");
+  trendList.innerHTML = "";
+
+  list.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `
+      <div class="card-top">
+        <div>
+          <h3>${item.API}</h3>
+          <p>${item.Description}</p>
+          <div class="tags">
+            <span class="tag">${item.Category}</span>
+          </div>
+        </div>
+        <div class="score">API</div>
+      </div>
+    `;
+    trendList.appendChild(el);
+  });
+}
+
     function updateClock() {
       const now = new Date();
       document.getElementById("clock").textContent = now.toLocaleTimeString("tr-TR");
@@ -398,5 +427,8 @@
     updateClock();
     setInterval(updateClock, 1000);
   </script>
+
+<button onclick="gercekVeriGetir()">🌍 Gerçek Veri Getir</button>
+
 </body>
 </html>
