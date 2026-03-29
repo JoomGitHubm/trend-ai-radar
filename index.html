@@ -391,7 +391,7 @@
 
 
 async function gercekVeriGetir() {
-  const res = await fetch("https://api.publicapis.org/entries");
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   const data = await res.json();
 
   const list = data.entries.slice(0, 5);
