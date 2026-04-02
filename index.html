@@ -27,6 +27,7 @@
         radial-gradient(circle at top left, rgba(124,58,237,.25), transparent 30%),
         radial-gradient(circle at top right, rgba(6,182,212,.20), transparent 25%),
         linear-gradient(135deg, #090d18, #10182f);
+      will-change: scroll-position;
     }
 
     .container{
@@ -41,6 +42,7 @@
       border-radius:24px;
       padding:28px;
       box-shadow:0 20px 50px rgba(0,0,0,.35);
+      will-change: transform;
     }
 
     .badge{
@@ -89,6 +91,16 @@
       color:white;
       font-weight:bold;
       font-size:14px;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      will-change: transform;
+    }
+
+    button:hover{
+      transform: translateY(-1px);
+    }
+
+    button:active{
+      transform: translateY(0);
     }
 
     .primary{
@@ -111,6 +123,12 @@
       border:1px solid rgba(255,255,255,.08);
       border-radius:18px;
       padding:16px;
+      will-change: transform;
+      transition: transform 0.2s ease;
+    }
+
+    .stat:hover{
+      transform: translateY(-2px);
     }
 
     .stat small{
@@ -150,6 +168,13 @@
       border-radius:18px;
       padding:16px;
       margin-bottom:12px;
+      will-change: transform;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow:0 8px 25px rgba(0,0,0,.3);
     }
 
     .card-top{
@@ -221,6 +246,7 @@
       border-radius:14px 14px 6px 6px;
       background:linear-gradient(180deg, #22d3ee, #7c3aed);
       box-shadow:0 12px 30px rgba(124,58,237,.25);
+      transition: height 0.3s ease;
     }
 
     .bar-label{
@@ -340,9 +366,10 @@
 
     const gunler = ["Pzt","Sal","Çrş","Prş","Cum","Cmt","Paz"];
     let activeIndex = 0;
+    let clockTimer = null;
 
     function renderCards(list, data) {
-      list.innerHTML = "";
+      const fragment = document.createDocumentFragment();
       data.forEach(item => {
         const el = document.createElement("div");
         el.className = "card";
@@ -358,13 +385,15 @@
             <div class="score">${item.score}</div>
           </div>
         `;
-        list.appendChild(el);
+        fragment.appendChild(el);
       });
+      list.innerHTML = "";
+      list.appendChild(fragment);
     }
 
     function renderBars(values) {
       const weeklyBars = document.getElementById("weeklyBars");
-      weeklyBars.innerHTML = "";
+      const fragment = document.createDocumentFragment();
       values.forEach((v, i) => {
         const wrap = document.createElement("div");
         wrap.className = "bar-wrap";
@@ -372,8 +401,10 @@
           <div class="bar" style="height:${v}%;"></div>
           <div class="bar-label">${gunler[i]}</div>
         `;
-        weeklyBars.appendChild(wrap);
+        fragment.appendChild(wrap);
       });
+      weeklyBars.innerHTML = "";
+      weeklyBars.appendChild(fragment);
     }
 
     function renderAll() {
@@ -424,9 +455,16 @@ async function gercekVeriGetir() {
       document.getElementById("clock").textContent = now.toLocaleTimeString("tr-TR");
     }
 
-    renderAll();
-    updateClock();
-    setInterval(updateClock, 1000);
+    function initClock() {
+      if (clockTimer) clearInterval(clockTimer);
+      updateClock();
+      clockTimer = setInterval(updateClock, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAll();
+      initClock();
+    });
   </script>
 
 
